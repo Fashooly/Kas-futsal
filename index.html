@@ -459,9 +459,9 @@
     <!-- JAVASCRIPT LOGIC DENGAN FETCH API -->
     <script>
         // =========================================================================
-        // URL API Deployment Google Apps Script Akun Belajar.id
+        // URL API Deployment Google Apps Script Akun Publik
         // =========================================================================
-        const API_URL = "https://script.google.com/a/macros/guru.sd.belajar.id/s/AKfycbzYrd_fmkELVEIXtLKcs8_J2rir_9pPdy8gRIoELx-NttZaxW2bOlZcgjPN9H6EIiRn/exec"; 
+        const API_URL = "https://script.google.com/macros/s/AKfycbzYrd_fmkELVEIXtLKcs8_J2rir_9pPdy8gRIoELx-NttZaxW2bOlZcgjPN9H6EIiRn/exec"; 
 
         // Data transaksi awal bersih tanpa data dummy
         let dataTransaksi = [];
@@ -504,7 +504,6 @@
             if (cached) {
                 try {
                     let parsed = JSON.parse(cached);
-                    // Filter keluar data dummy lama
                     dataTransaksi = Array.isArray(parsed) ? parsed.filter(t => t.id !== 101 && t.id !== 102) : [];
                     renderTable();
                     updateDashboard();
