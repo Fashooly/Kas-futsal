@@ -5,7 +5,7 @@
 "rewrites": [
 {
 "source": "/api/kas",
-"destination": "https://script.google.com/a/macros/guru.sd.belajar.id/s/AKfycbzYrd_fmkELVEIXtLKcs8_J2rir_9pPdy8gRIoELx-NttZaxW2bOlZcgjPN9H6EIiRn/exec"
+"destination": "https://script.google.com/macros/s/AKfycbzYrd_fmkELVEIXtLKcs8_J2rir_9pPdy8gRIoELx-NttZaxW2bOlZcgjPN9H6EIiRn/exec"
 },
 {
 "source": "/(.)",
