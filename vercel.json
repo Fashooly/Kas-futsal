@@ -1,0 +1,34 @@
+{
+"version": 2,
+"cleanUrls": true,
+"trailingSlash": false,
+"rewrites": [
+{
+"source": "/api/kas",
+"destination": "https://script.google.com/a/macros/guru.sd.belajar.id/s/AKfycbzYrd_fmkELVEIXtLKcs8_J2rir_9pPdy8gRIoELx-NttZaxW2bOlZcgjPN9H6EIiRn/exec"
+},
+{
+"source": "/(.)",
+"destination": "/index.html"
+}
+],
+"headers": [
+{
+"source": "/(.)",
+"headers": [
+{
+"key": "X-Content-Type-Options",
+"value": "nosniff"
+},
+{
+"key": "X-XSS-Protection",
+"value": "1; mode=block"
+},
+{
+"key": "Referrer-Policy",
+"value": "strict-origin-when-cross-origin"
+}
+]
+}
+]
+}
