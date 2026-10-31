@@ -419,7 +419,7 @@
                         <div class="flex items-center justify-between">
                             <div>
                                 <h3 class="font-black text-slate-900 text-base">Last Orders</h3>
-                                <p class="text-[11px] text-slate-400">Data Updates Realtime</p>
+                                <p id="lastOrdersSubLabel" class="text-[11px] text-slate-400">Data Transaksi Bulan Ini</p>
                             </div>
                             <button onclick="switchMenu('rekap')" class="text-xs font-bold text-slate-500 hover:text-slate-900 flex items-center gap-1">
                                 View All Orders <i class="fa-solid fa-arrow-right text-[10px]"></i>
@@ -1142,15 +1142,46 @@
 
         function renderTable(list = dataTransaksi) {
             const tbody = document.getElementById('transactionTableBody');
+            const subLabel = document.getElementById('lastOrdersSubLabel');
             if (!tbody) return;
 
             tbody.innerHTML = '';
-            if (list.length === 0) {
+            if (!list || list.length === 0) {
                 tbody.innerHTML = `<tr><td colspan="5" class="py-8 text-center text-slate-400 font-medium">Belum ada data transaksi yang tercatat.</td></tr>`;
                 return;
             }
 
-            const sorted = [...list].sort((a, b) => new Date(b.tanggal + 'T00:00:00') - new Date(a.tanggal + 'T00:00:00'));
+            // Tentukan bulan terkini (YYYY-MM)
+            const now = new Date();
+            const currentYYYYMM = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0');
+
+            // Cek apakah ada data pada bulan berjalan saat ini
+            let hasCurrentMonth = list.some(t => t.tanggal && t.tanggal.startsWith(currentYYYYMM));
+            let targetBulan = currentYYYYMM;
+
+            // Jika belum ada transaksi di bulan sekarang, gunakan bulan terbaru yang memiliki data
+            if (!hasCurrentMonth) {
+                const datesWithData = list.map(t => t.tanggal).filter(Boolean).sort().reverse();
+                if (datesWithData.length > 0) {
+                    targetBulan = datesWithData[0].substring(0, 7);
+                }
+            }
+
+            // Filter transaksi hanya untuk bulan target
+            const filteredBulan = list.filter(t => t.tanggal && t.tanggal.startsWith(targetBulan));
+
+            if (subLabel) {
+                const [yyyy, mm] = targetBulan.split('-');
+                const namaBulan = new Date(parseInt(yyyy), parseInt(mm) - 1, 1).toLocaleDateString('id-ID', { month: 'long', year: 'numeric' });
+                subLabel.textContent = `Transaksi Periode ${namaBulan} (${filteredBulan.length} transaksi)`;
+            }
+
+            if (filteredBulan.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" class="py-8 text-center text-slate-400 font-medium">Tidak ada transaksi pada bulan ini.</td></tr>`;
+                return;
+            }
+
+            const sorted = [...filteredBulan].sort((a, b) => new Date(b.tanggal + 'T00:00:00') - new Date(a.tanggal + 'T00:00:00'));
 
             sorted.forEach(t => {
                 const isMasuk = t.jenis === 'Masuk';
