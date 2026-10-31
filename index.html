@@ -77,11 +77,23 @@
         ::-webkit-scrollbar-thumb:hover { background: #b8b09e; }
 
         @media print {
-            aside, header, nav, #modalFormOverlay, #modalLoginOverlay, #modalDeleteOverlay, #modalLogoOverlay, #notification {
+            /* Sembunyikan seluruh UI, wrapper aplikasi, sidebar, header, dan modal saat print */
+            aside, header, nav, main, #modalFormOverlay, #modalLoginOverlay, #modalDeleteOverlay, #modalLogoOverlay, #notification, .max-w-\[1440px\] {
                 display: none !important;
             }
-            body { background-color: #ffffff !important; padding: 0 !important; margin: 0 !important; }
-            #printArea { display: block !important; position: static !important; width: 100% !important; margin: 0 !important; padding: 0 !important; }
+            body { 
+                background-color: #ffffff !important; 
+                padding: 0 !important; 
+                margin: 0 !important; 
+            }
+            /* Hanya cetak satu-satunya kontainer printArea resmi */
+            #printArea { 
+                display: block !important; 
+                position: static !important; 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+            }
         }
     </style>
 </head>
@@ -1824,14 +1836,32 @@
             const printArea = document.getElementById('printArea');
             if (!liveSheet || !printArea) return;
 
+            // Salin lembar pratinjau bawah ke area print tunggal
             printArea.innerHTML = liveSheet.innerHTML;
-            window.onafterprint = function() {
-                printArea.innerHTML = '';
-            };
+            
             setTimeout(() => {
                 window.print();
-            }, 200);
+            }, 100);
         }
+
+        // Tangani jika user menekan shortcut CTRL+P langsung dari keyboard
+        window.addEventListener('beforeprint', () => {
+            const printArea = document.getElementById('printArea');
+            const liveSheet = document.getElementById('livePaperSheet');
+            const vPrev = document.getElementById('viewPreview');
+
+            // Jika sedang di mode preview atau printArea belum terisi, isi otomatis dari lembar pratinjau
+            if (liveSheet && (!printArea.innerHTML || printArea.innerHTML.trim() === '' || (vPrev && !vPrev.classList.contains('hidden')))) {
+                printArea.innerHTML = liveSheet.innerHTML;
+            }
+        });
+
+        window.addEventListener('afterprint', () => {
+            const printArea = document.getElementById('printArea');
+            if (printArea) {
+                printArea.innerHTML = '';
+            }
+        });
 
         function clearFilterTanggal() {
             const inputTgl = document.getElementById('filterTanggal');
