@@ -148,17 +148,17 @@
                 <button onclick="switchMenu('dashboard'); toggleMobileDrawer(false);" class="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-bold bg-white/15 text-white">
                     <i class="fa-solid fa-chart-pie text-sm text-pastel-amber"></i> Dashboard
                 </button>
-                <button onclick="switchMenu('rekap'); toggleMobileDrawer(false);" class="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold text-slate-400 hover:text-white">
-                    <i class="fa-solid fa-file-invoice-dollar text-xs"></i> Rekap Kas & Cetak PDF
-                </button>
                 <button onclick="openFormModal(); toggleMobileDrawer(false);" class="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold text-emerald-400 hover:text-white">
                     <i class="fa-solid fa-credit-card text-xs"></i> Catat Transaksi
                 </button>
-                <button onclick="filterByKategori('Pembelian Alat'); toggleMobileDrawer(false);" class="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold text-slate-400 hover:text-white">
-                    <i class="fa-solid fa-basket-shopping text-xs"></i> Products (Alat/Bola)
+                <button onclick="openPreviewMode('mingguan'); toggleMobileDrawer(false);" class="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold text-slate-300 hover:text-white">
+                    <i class="fa-solid fa-calendar-week text-xs text-amber-300"></i> Rekap Mingguan
                 </button>
-                <button onclick="filterByKategori('Iuran Anggota'); toggleMobileDrawer(false);" class="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold text-slate-400 hover:text-white">
-                    <i class="fa-solid fa-user text-xs"></i> Customer (Iuran)
+                <button onclick="openPreviewMode('bulanan'); toggleMobileDrawer(false);" class="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold text-slate-300 hover:text-white">
+                    <i class="fa-solid fa-file-invoice-dollar text-xs text-emerald-400"></i> Rekap Bulanan
+                </button>
+                <button onclick="switchMenu('rekap'); toggleMobileDrawer(false);" class="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold text-slate-400 hover:text-white">
+                    <i class="fa-solid fa-table-list text-xs"></i> Riwayat & Filter
                 </button>
                 <button onclick="openLogoModal(); toggleMobileDrawer(false);" class="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold text-slate-400 hover:text-white">
                     <i class="fa-solid fa-gear text-xs"></i> Settings & Logo
@@ -222,48 +222,37 @@
                             <span>Dashboard</span>
                         </button>
 
-                        <!-- 2. Statistics -->
-                        <button onclick="switchMenu('dashboard'); scrollToElement('statWeeklyBar');" class="w-full flex items-center justify-start gap-3.5 px-3.5 py-2.5 rounded-2xl text-xs font-semibold text-slate-400 hover:text-white hover:bg-white/5 transition-all">
-                            <i class="fa-solid fa-chart-column text-xs shrink-0 w-4 text-center"></i>
-                            <span>Statistics</span>
-                        </button>
-
-                        <!-- 3. Payment (Catat Transaksi Kas Baru) -->
+                        <!-- 2. Payment (Catat Transaksi Kas Baru) -->
                         <button onclick="openFormModal()" class="w-full flex items-center justify-start gap-3.5 px-3.5 py-2.5 rounded-2xl text-xs font-semibold text-emerald-400 hover:text-white hover:bg-emerald-500/20 transition-all">
                             <i class="fa-solid fa-credit-card text-xs shrink-0 w-4 text-center"></i>
                             <span class="font-bold">Payment</span>
                         </button>
 
-                        <!-- 4. Transactions (Rekap Kas & Cetak Laporan PDF) -->
+                        <!-- 3. Rekap Mingguan -->
+                        <button id="menuMingguan" onclick="openPreviewMode('mingguan')" class="w-full flex items-center justify-start gap-3.5 px-3.5 py-2.5 rounded-2xl text-xs font-semibold text-slate-400 hover:text-white hover:bg-white/5 transition-all">
+                            <i class="fa-solid fa-calendar-week text-xs shrink-0 w-4 text-center text-amber-300"></i>
+                            <span>Rekap Mingguan</span>
+                        </button>
+
+                        <!-- 4. Rekap Bulanan -->
+                        <button id="menuBulanan" onclick="openPreviewMode('bulanan')" class="w-full flex items-center justify-start gap-3.5 px-3.5 py-2.5 rounded-2xl text-xs font-semibold text-slate-400 hover:text-white hover:bg-white/5 transition-all">
+                            <i class="fa-solid fa-file-invoice-dollar text-xs shrink-0 w-4 text-center text-emerald-400"></i>
+                            <span>Rekap Bulanan</span>
+                        </button>
+
+                        <!-- 5. Transactions (Riwayat Tabel Data Lengkap) -->
                         <button id="menuRekap" onclick="switchMenu('rekap')" class="w-full flex items-center justify-start gap-3.5 px-3.5 py-2.5 rounded-2xl text-xs font-semibold text-slate-400 hover:text-white hover:bg-white/5 transition-all">
-                            <i class="fa-solid fa-arrow-right-arrow-left text-xs shrink-0 w-4 text-center"></i>
+                            <i class="fa-solid fa-table-list text-xs shrink-0 w-4 text-center"></i>
                             <span>Transactions</span>
                         </button>
 
-                        <!-- 5. Products (Filter Alat & Lapangan) -->
-                        <button onclick="filterByKategori('Pembelian Alat')" class="w-full flex items-center justify-start gap-3.5 px-3.5 py-2.5 rounded-2xl text-xs font-semibold text-slate-400 hover:text-white hover:bg-white/5 transition-all">
-                            <i class="fa-solid fa-basket-shopping text-xs shrink-0 w-4 text-center"></i>
-                            <span>Products</span>
+                        <!-- 6. Statistics (Scroll ke Bar Chart Jumat) -->
+                        <button onclick="switchMenu('dashboard'); scrollToElement('statWeeklyBar');" class="w-full flex items-center justify-start gap-3.5 px-3.5 py-2.5 rounded-2xl text-xs font-semibold text-slate-400 hover:text-white hover:bg-white/5 transition-all">
+                            <i class="fa-solid fa-chart-column text-xs shrink-0 w-4 text-center"></i>
+                            <span>Statistics</span>
                         </button>
 
-                        <!-- 6. Customer (Filter Iuran Siswa) -->
-                        <button onclick="filterByKategori('Iuran Anggota')" class="w-full flex items-center justify-start gap-3.5 px-3.5 py-2.5 rounded-2xl text-xs font-semibold text-slate-400 hover:text-white hover:bg-white/5 transition-all">
-                            <i class="fa-solid fa-user text-xs shrink-0 w-4 text-center"></i>
-                            <span>Customer</span>
-                        </button>
-
-                        <!-- 7. Messages (Dengan Badge Angka Ungu) -->
-                        <button onclick="showNotification('Informasi', 'Belum ada notifikasi pesan baru.')" class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-semibold text-slate-400 hover:text-white hover:bg-white/5 transition-all relative">
-                            <div class="flex items-center gap-3.5">
-                                <i class="fa-solid fa-comment-dots text-xs shrink-0 w-4 text-center"></i>
-                                <span>Messages</span>
-                            </div>
-                            <span class="bg-[#8b5cf6] text-white text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center shadow-sm">
-                                5
-                            </span>
-                        </button>
-
-                        <!-- 8. Settings -->
+                        <!-- 7. Settings -->
                         <button onclick="openLogoModal()" class="w-full flex items-center justify-start gap-3.5 px-3.5 py-2.5 rounded-2xl text-xs font-semibold text-slate-400 hover:text-white hover:bg-white/5 transition-all">
                             <i class="fa-solid fa-gear text-xs shrink-0 w-4 text-center"></i>
                             <span>Settings</span>
@@ -513,6 +502,52 @@
                                     </tr>
                                 </tfoot>
                             </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ================================================================= -->
+                <!-- LIVE PREVIEW VIEW (Pratinjau Lembar Cetak Rekap Mingguan & Bulanan)-->
+                <!-- ================================================================= -->
+                <div id="viewPreview" class="space-y-6 hidden">
+                    <div class="bg-white p-5 sm:p-6 rounded-3xl border border-[#e2dcd0] shadow-sm">
+                        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+                            <div>
+                                <span class="bg-amber-100 text-amber-900 text-[10px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider inline-block mb-1">
+                                    <i class="fa-solid fa-eye mr-1"></i> Live Print Preview
+                                </span>
+                                <h2 id="previewHeaderTitle" class="font-black text-slate-900 text-lg sm:text-xl">Pratinjau Lembar Cetak</h2>
+                                <p class="text-xs text-slate-400 font-medium">Tampilan riil dokumen yang akan dicetak atau disimpan sebagai PDF</p>
+                            </div>
+                            <div class="flex items-center gap-2 w-full sm:w-auto">
+                                <button onclick="switchMenu('dashboard')" class="flex-1 sm:flex-none px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-2xl text-xs font-bold transition-all">
+                                    <i class="fa-solid fa-arrow-left mr-1"></i> Kembali
+                                </button>
+                                <button onclick="cetakDariPreview()" class="flex-1 sm:flex-none px-5 py-2.5 bg-sidebardark hover:bg-black text-white rounded-2xl text-xs font-black shadow-lg transition-all active:scale-95 flex items-center justify-center gap-2">
+                                    <i class="fa-solid fa-print"></i> Cetak Dokumen Ini
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Bar Kontrol Filter Periode Preview -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-4">
+                            <div>
+                                <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">Pilih Bulan & Tahun</label>
+                                <select id="previewBulanSelect" onchange="generateLivePreview()" class="w-full px-3.5 py-2.5 bg-surface border border-[#e2dcd0] rounded-2xl text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-slate-900 cursor-pointer">
+                                </select>
+                            </div>
+                            <div id="previewPekanControl">
+                                <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">Pilih Pekan / Jumat</label>
+                                <select id="previewPekanSelect" onchange="generateLivePreview()" class="w-full px-3.5 py-2.5 bg-surface border border-[#e2dcd0] rounded-2xl text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-slate-900 cursor-pointer">
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- KERTAS PRATINJAU DOKUMEN REAL (Simulasi Lembar Cetak A4) -->
+                    <div class="bg-slate-200/60 p-3 sm:p-6 rounded-[2.5rem] border border-[#e2dcd0] overflow-x-auto shadow-inner">
+                        <div id="livePaperSheet" class="bg-white max-w-[820px] mx-auto p-6 sm:p-10 rounded-2xl shadow-xl border border-slate-200">
+                            <!-- Diisi secara dinamis oleh JavaScript generateLivePreview() -->
                         </div>
                     </div>
                 </div>
@@ -806,6 +841,7 @@
         let deleteTargetId = null;
         let isLoggedIn = false;
         let notifTimeout = null;
+        let currentPreviewType = 'bulanan'; // 'mingguan' atau 'bulanan'
 
         function formatRupiah(num) {
             return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(num || 0);
@@ -1458,24 +1494,343 @@
         function switchMenu(menu) {
             const vDash = document.getElementById('viewDashboard');
             const vRekap = document.getElementById('viewRekap');
+            const vPrev = document.getElementById('viewPreview');
             const mDash = document.getElementById('menuDashboard');
             const mRekap = document.getElementById('menuRekap');
+            const mMingguan = document.getElementById('menuMingguan');
+            const mBulanan = document.getElementById('menuBulanan');
 
             if (!vDash || !vRekap) return;
 
+            // Reset gaya tombol menu
+            const inactiveClass = "w-full flex items-center justify-start gap-3.5 px-3.5 py-2.5 rounded-2xl text-xs font-semibold text-slate-400 hover:text-white hover:bg-white/5 transition-all";
+            const activeClass = "w-full flex items-center justify-start gap-3.5 px-3.5 py-2.5 rounded-2xl text-xs font-bold transition-all bg-white/15 text-white shadow-sm border border-white/10";
+
+            if (mDash) mDash.className = inactiveClass;
+            if (mRekap) mRekap.className = inactiveClass;
+            if (mMingguan) mMingguan.className = inactiveClass;
+            if (mBulanan) mBulanan.className = inactiveClass;
+
+            vDash.classList.add('hidden');
+            vRekap.classList.add('hidden');
+            if (vPrev) vPrev.classList.add('hidden');
+
             if (menu === 'dashboard') {
-                if (mDash) mDash.className = "w-full flex items-center justify-center lg:justify-start gap-3.5 px-2.5 lg:px-3.5 py-2.5 rounded-2xl text-xs font-bold transition-all bg-white/15 text-white shadow-sm border border-white/10";
-                if (mRekap) mRekap.className = "w-full flex items-center justify-center lg:justify-start gap-3.5 px-2.5 lg:px-3.5 py-2.5 rounded-2xl text-xs font-semibold text-slate-400 hover:text-white hover:bg-white/5 transition-all";
-                vRekap.classList.add('hidden');
+                if (mDash) mDash.className = activeClass;
                 vDash.classList.remove('hidden');
-            } else {
-                if (mRekap) mRekap.className = "w-full flex items-center justify-center lg:justify-start gap-3.5 px-2.5 lg:px-3.5 py-2.5 rounded-2xl text-xs font-bold transition-all bg-white/15 text-white shadow-sm border border-white/10";
-                if (mDash) mDash.className = "w-full flex items-center justify-center lg:justify-start gap-3.5 px-2.5 lg:px-3.5 py-2.5 rounded-2xl text-xs font-semibold text-slate-400 hover:text-white hover:bg-white/5 transition-all";
-                vDash.classList.add('hidden');
+            } else if (menu === 'rekap') {
+                if (mRekap) mRekap.className = activeClass;
                 vRekap.classList.remove('hidden');
                 populateRekapFilters();
                 processRekap();
+            } else if (menu === 'preview') {
+                if (currentPreviewType === 'mingguan' && mMingguan) mMingguan.className = activeClass;
+                if (currentPreviewType === 'bulanan' && mBulanan) mBulanan.className = activeClass;
+                if (vPrev) vPrev.classList.remove('hidden');
             }
+        }
+
+        // =========================================================================
+        // LOGIKA MENU & LIVE PREVIEW CETAK REKAP MINGGUAN & BULANAN
+        // =========================================================================
+        function openPreviewMode(type) {
+            currentPreviewType = type;
+            switchMenu('preview');
+
+            const title = document.getElementById('previewHeaderTitle');
+            const pekanControl = document.getElementById('previewPekanControl');
+
+            if (title) {
+                title.textContent = type === 'mingguan' 
+                    ? "Pratinjau Lembar Rekap Mingguan (Pekan/Jumat)" 
+                    : "Pratinjau Lembar Rekap Bulanan";
+            }
+
+            if (pekanControl) {
+                if (type === 'mingguan') {
+                    pekanControl.classList.remove('hidden');
+                } else {
+                    pekanControl.classList.add('hidden');
+                }
+            }
+
+            populatePreviewFilters();
+            generateLivePreview();
+        }
+
+        function populatePreviewFilters() {
+            const bSelect = document.getElementById('previewBulanSelect');
+            if (!bSelect) return;
+
+            const existingVal = bSelect.value;
+            bSelect.innerHTML = '';
+
+            const bulanSet = new Set();
+            dataTransaksi.forEach(trx => {
+                if (trx.tanggal) bulanSet.add(trx.tanggal.substring(0, 7));
+            });
+
+            const now = new Date();
+            const currentYYYYMM = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0');
+            bulanSet.add(currentYYYYMM);
+
+            Array.from(bulanSet).sort().reverse().forEach(b => {
+                const opt = document.createElement('option');
+                opt.value = b;
+                const [yyyy, mm] = b.split('-');
+                opt.textContent = new Date(parseInt(yyyy), parseInt(mm) - 1, 1).toLocaleDateString('id-ID', { month: 'long', year: 'numeric' });
+                bSelect.appendChild(opt);
+            });
+
+            if (existingVal && bulanSet.has(existingVal)) {
+                bSelect.value = existingVal;
+            } else {
+                bSelect.value = currentYYYYMM;
+            }
+
+            updatePreviewPekanOptions();
+        }
+
+        function updatePreviewPekanOptions() {
+            const bSelect = document.getElementById('previewBulanSelect');
+            const pSelect = document.getElementById('previewPekanSelect');
+            if (!bSelect || !pSelect) return;
+
+            pSelect.innerHTML = '';
+            const targetBulan = bSelect.value;
+            const [yyyy, mm] = targetBulan.split('-');
+            const year = parseInt(yyyy);
+            const month = parseInt(mm) - 1;
+
+            // Cari semua hari Jumat di bulan ini
+            const fridays = [];
+            const tempDate = new Date(year, month, 1);
+            while (tempDate.getMonth() === month) {
+                if (tempDate.getDay() === 5) {
+                    const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(tempDate.getDate()).padStart(2, '0')}`;
+                    fridays.push({
+                        dateStr: dateStr,
+                        dayNum: tempDate.getDate()
+                    });
+                }
+                tempDate.setDate(tempDate.getDate() + 1);
+            }
+
+            fridays.forEach((f, idx) => {
+                const opt = document.createElement('option');
+                opt.value = f.dateStr;
+                opt.textContent = `Pekan ${idx + 1} - Jumat, ${f.dayNum} ${new Date(year, month, 1).toLocaleDateString('id-ID', { month: 'short' })}`;
+                pSelect.appendChild(opt);
+            });
+        }
+
+        function generateLivePreview() {
+            const bSelect = document.getElementById('previewBulanSelect');
+            const pSelect = document.getElementById('previewPekanSelect');
+            const container = document.getElementById('livePaperSheet');
+            if (!container || !bSelect) return;
+
+            const targetBulan = bSelect.value;
+            const [yyyy, mm] = targetBulan.split('-');
+            const namaBulanTahun = new Date(parseInt(yyyy), parseInt(mm) - 1, 1).toLocaleDateString('id-ID', { month: 'long', year: 'numeric' });
+            const tanggalCetak = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+
+            let saldoAwal = 0;
+            let filtered = [];
+            let headerJudul = "";
+            let subJudulPeriode = "";
+
+            if (currentPreviewType === 'mingguan') {
+                const targetJumat = pSelect?.value;
+                if (!targetJumat) {
+                    container.innerHTML = `<div class="text-center py-10 text-slate-400 font-bold">Pilih pekan/tanggal Jumat terlebih dahulu.</div>`;
+                    return;
+                }
+
+                headerJudul = "LAPORAN REKAPITULASI KAS MINGGUAN (HARI JUMAT)";
+                subJudulPeriode = `Hari/Tanggal: <strong>${formatTanggalHari(targetJumat)}</strong>`;
+
+                // Saldo sebelum hari Jumat target
+                dataTransaksi.forEach(trx => {
+                    if (trx.tanggal && trx.tanggal < targetJumat) {
+                        const nom = Number(trx.nominal) || 0;
+                        if (trx.jenis === 'Masuk') saldoAwal += nom;
+                        else saldoAwal -= nom;
+                    }
+                });
+
+                filtered = dataTransaksi.filter(trx => trx.tanggal === targetJumat);
+            } else {
+                // Mode Bulanan
+                headerJudul = "LAPORAN REKAPITULASI KAS BULANAN";
+                subJudulPeriode = `Periode Bulan: <strong class="text-emerald-800">${namaBulanTahun}</strong>`;
+
+                const startDateStr = targetBulan + '-01';
+                dataTransaksi.forEach(trx => {
+                    if (trx.tanggal && trx.tanggal < startDateStr) {
+                        const nom = Number(trx.nominal) || 0;
+                        if (trx.jenis === 'Masuk') saldoAwal += nom;
+                        else saldoAwal -= nom;
+                    }
+                });
+
+                filtered = dataTransaksi.filter(trx => trx.tanggal && trx.tanggal.substring(0, 7) === targetBulan);
+            }
+
+            // Pisahkan & akumulasi iuran anggota
+            let totalIuran = 0;
+            let countIuran = 0;
+            let transaksiLain = [];
+
+            filtered.forEach(trx => {
+                const isIuran = (trx.kategori === 'Iuran Anggota') || 
+                                (trx.keterangan && trx.keterangan.toLowerCase().includes('iuran anggota'));
+                if (isIuran && trx.jenis === 'Masuk') {
+                    totalIuran += Number(trx.nominal) || 0;
+                    countIuran++;
+                } else {
+                    transaksiLain.push(trx);
+                }
+            });
+
+            transaksiLain.sort((a, b) => new Date(a.tanggal + 'T00:00:00') - new Date(b.tanggal + 'T00:00:00'));
+
+            let previewItems = [];
+            if (totalIuran > 0) {
+                previewItems.push({
+                    isGroupedIuran: true,
+                    displayTanggal: currentPreviewType === 'mingguan' ? 'Jumat' : 'Akumulasi',
+                    keterangan: 'Rekap Total Iuran Anggota',
+                    catatan: `Total iuran seluruh anggota (${countIuran} pembayaran)`,
+                    jenis: 'Masuk',
+                    nominal: totalIuran
+                });
+            }
+            previewItems = previewItems.concat(transaksiLain);
+
+            let tDebit = 0;
+            let tKredit = 0;
+            let runningSaldo = saldoAwal;
+
+            let rowHtml = previewItems.map((item, idx) => {
+                const isMasuk = item.jenis === 'Masuk';
+                const debit = isMasuk ? Number(item.nominal) : 0;
+                const kredit = !isMasuk ? Number(item.nominal) : 0;
+
+                tDebit += debit;
+                tKredit += kredit;
+                runningSaldo += (debit - kredit);
+
+                const tglText = item.displayTanggal || formatTanggalHari(item.tanggal);
+                let detailSub = '';
+                if (item.isGroupedIuran) {
+                    detailSub = `<br><span class="text-[10px] text-emerald-700 font-bold">• ${item.catatan}</span>`;
+                } else if (item.nama) {
+                    detailSub = `<br><span class="text-[10px] text-slate-500 font-semibold">• ${item.nama} ${item.kelas ? '(' + item.kelas + ')' : ''}</span>`;
+                }
+
+                return `
+                    <tr class="border-b border-slate-200 ${item.isGroupedIuran ? 'bg-emerald-50/50' : ''}">
+                        <td class="p-2 text-center text-xs font-bold text-slate-500">${idx + 1}</td>
+                        <td class="p-2 text-xs font-semibold whitespace-nowrap ${item.isGroupedIuran ? 'text-emerald-800 font-bold' : 'text-slate-600'}">${tglText}</td>
+                        <td class="p-2 text-xs font-bold text-slate-800">${item.keterangan || '-'} ${detailSub}</td>
+                        <td class="p-2 text-right text-xs font-black text-emerald-700">${debit > 0 ? formatRupiah(debit) : '-'}</td>
+                        <td class="p-2 text-right text-xs font-black text-rose-600">${kredit > 0 ? formatRupiah(kredit) : '-'}</td>
+                        <td class="p-2 text-right text-xs font-black text-slate-900">${formatRupiah(runningSaldo)}</td>
+                    </tr>
+                `;
+            }).join('');
+
+            const saldoAkhir = runningSaldo;
+
+            container.innerHTML = `
+                <div class="space-y-5">
+                    <!-- KOP SURAT / HEADER DOKUMEN -->
+                    <div class="text-center border-b-2 border-emerald-950 pb-3">
+                        <h1 class="text-lg sm:text-xl font-black text-emerald-950 tracking-tight uppercase">${headerJudul}</h1>
+                        <h3 class="text-sm font-black text-slate-800 tracking-wider uppercase mt-0.5">FUTSAL AZ-ZAHRA</h3>
+                        <p class="text-[11px] text-slate-500 font-medium mt-1">${subJudulPeriode} | Dicetak: ${tanggalCetak}</p>
+                    </div>
+
+                    <!-- 4 KARTU RINGKASAN SALDO -->
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                        <div class="bg-slate-50 border border-slate-200 p-2.5 rounded-xl">
+                            <span class="text-[9px] font-black uppercase text-slate-400 block">${currentPreviewType === 'mingguan' ? 'Sisa Kas Lalu' : 'Sisa Bulan Lalu'}</span>
+                            <span class="text-xs font-black text-slate-800 block mt-0.5">${formatRupiah(saldoAwal)}</span>
+                        </div>
+                        <div class="bg-emerald-50/80 border border-emerald-200 p-2.5 rounded-xl">
+                            <span class="text-[9px] font-black uppercase text-emerald-700 block">Pemasukan (Debit)</span>
+                            <span class="text-xs font-black text-emerald-800 block mt-0.5">+ ${formatRupiah(tDebit)}</span>
+                        </div>
+                        <div class="bg-rose-50/80 border border-rose-200 p-2.5 rounded-xl">
+                            <span class="text-[9px] font-black uppercase text-rose-600 block">Pengeluaran (Kredit)</span>
+                            <span class="text-xs font-black text-rose-700 block mt-0.5">- ${formatRupiah(tKredit)}</span>
+                        </div>
+                        <div class="bg-emerald-950 text-white p-2.5 rounded-xl">
+                            <span class="text-[9px] font-black uppercase text-emerald-400 block">Sisa Saldo Kas</span>
+                            <span class="text-xs font-black text-white block mt-0.5">${formatRupiah(saldoAkhir)}</span>
+                        </div>
+                    </div>
+
+                    <!-- TABEL DOKUMEN CETAK -->
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-slate-100 border-b-2 border-slate-300 text-[10px] uppercase text-slate-600 font-black">
+                                    <th class="p-2 text-center w-8">No</th>
+                                    <th class="p-2 w-28">Tanggal</th>
+                                    <th class="p-2">Keterangan Transaksi</th>
+                                    <th class="p-2 text-right w-28">Debit (Masuk)</th>
+                                    <th class="p-2 text-right w-28">Kredit (Keluar)</th>
+                                    <th class="p-2 text-right w-28">Saldo Kas</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="bg-emerald-50/30 border-b border-emerald-100">
+                                    <td class="p-2 text-center text-xs font-black text-emerald-700">•</td>
+                                    <td class="p-2 text-xs font-bold text-emerald-800 whitespace-nowrap">Saldo Awal</td>
+                                    <td class="p-2 text-xs font-black text-emerald-900">Saldo Awal Kas Sebelumnya</td>
+                                    <td class="p-2 text-right text-xs text-slate-400">-</td>
+                                    <td class="p-2 text-right text-xs text-slate-400">-</td>
+                                    <td class="p-2 text-right text-xs font-black text-emerald-900">${formatRupiah(saldoAwal)}</td>
+                                </tr>
+                                ${rowHtml.length > 0 ? rowHtml : `<tr><td colspan="6" class="p-6 text-center text-xs text-slate-400">Tidak ada transaksi baru pada periode ini.</td></tr>`}
+                            </tbody>
+                            <tfoot>
+                                <tr class="bg-slate-100 border-t-2 border-slate-900 text-xs font-black">
+                                    <td colspan="3" class="p-2.5 text-right uppercase text-slate-500 text-[11px]">TOTAL MUTASI PERIODE:</td>
+                                    <td class="p-2.5 text-right text-emerald-700">${formatRupiah(tDebit)}</td>
+                                    <td class="p-2.5 text-right text-rose-600">${formatRupiah(tKredit)}</td>
+                                    <td class="p-2.5 text-right text-slate-900 bg-slate-200/80">${formatRupiah(saldoAkhir)}</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+
+                    <!-- KOLOM TANDA TANGAN TU RESMI -->
+                    <div class="mt-8 pt-4 flex justify-end">
+                        <div class="text-center w-52">
+                            <p class="text-xs font-bold text-slate-600">Tanda Tangan / Penerima TU,</p>
+                            <div class="h-16"></div>
+                            <p class="text-xs font-extrabold text-slate-900">....................................................</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function cetakDariPreview() {
+            const liveSheet = document.getElementById('livePaperSheet');
+            const printArea = document.getElementById('printArea');
+            if (!liveSheet || !printArea) return;
+
+            printArea.innerHTML = liveSheet.innerHTML;
+            window.onafterprint = function() {
+                printArea.innerHTML = '';
+            };
+            setTimeout(() => {
+                window.print();
+            }, 200);
         }
 
         function clearFilterTanggal() {
